@@ -71,9 +71,41 @@ Let's add some settings using
 }
 
 # Part 2: Dockerfile
+Step 01: Base Image
+We'll go with debian
 
+FROM debian:latest
 
-Step XX: Update devcontainer.json
+Step 02: non root user
+
+ARG USERNAME=user-name-goes-here
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+
+USER $USERNAME
+
+Step 03: add root privilege
+
+    && apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+USER $USERNAME
+
+Step 04: Add the package you need
+apt-get update && apt-get install -y your parckage list
+
+Step 05: Update devcontainer.json
+Add a name and the build context
+    "name": "Debian",
+    "build": {
+        "dockerfile": "dockerfile",
+        "context": ".."
+    },
+
 # Resources
 https://containers.dev/
 
