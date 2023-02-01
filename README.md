@@ -1,6 +1,6 @@
 # workshop-devcontainer
 
-# Part 0: Setup & 
+# Part 0: Setup
 ## Step 0: Star this repository
 
 ## Step 1: Installation
