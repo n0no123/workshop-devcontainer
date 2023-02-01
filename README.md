@@ -41,9 +41,9 @@ Once this is done, you'll see a .devcontainer/devcontainer.json added to your fo
 Using the **>Dev Containers: Open folder in Container** command, build and run the dev container.
 
 ## Step 03: Add some features
-Devcontainers are easily customizable and comes with a wide range of already configured features.
+Dev Containers are easily customizable and come with a wide range of already configured features.
 
-You can either use the **>DevContainers: Configure Container Features** or go to https://containers.dev/features and copy and paste the desired feature within the feature field.
+You can either use the **>DevContainers: Configure Container Features** command or go to https://containers.dev/features and copy and paste the desired feature within the feature field.
 
 Either way, it should look something like that:
 
@@ -71,7 +71,7 @@ Like so:
 ```
 
 ### Step 05-1: Extensions
-Firstly, let's add some extensions, for that you will need to get the id's of the extensions you would like to add.
+Firstly, let's add some extensions, for that you will need to get the ids of the extensions you would like to add.
 
 *Go to the extension tab, and right click on any extension, then click on Copy Extension ID*
 
@@ -87,9 +87,9 @@ Firstly, let's add some extensions, for that you will need to get the id's of th
 
 ### Step 05-2: Settings
 
-You can also change the settings of VsCode inside the container, doing-so only affect the settings on your container, it will not change your local configuration.
+You can also change the settings of VsCode inside the container, doing-so only affects the settings of your container, it will not change your local configuration.
 
-For exemple, if we have [fish](https://fishshell.com/) installed, you could make it the default shell when creating a new integrated terminal with the folowing snipet:
+For exemple, if we have [fish](https://fishshell.com/) installed, you could make it the default shell when creating a new integrated terminal with the following snippet:
 
 *Go to settings, for that you can use <kbd>ctrl</kbd> + <kbd>,</kbd> then select the setting you wish to override in the container, then click on more action or use <kbd>⇧ shift</kbd> + <kbd>F9</kbd> and click on Copy Settings as JSON.*
 
