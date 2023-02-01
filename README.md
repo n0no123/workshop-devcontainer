@@ -65,9 +65,9 @@ For that, we'll use the customizations -> vscode fields.
 
 Like so:
 ```json
-"customizations": {
-    "vscode": {}
-}
+	"customizations": {
+	    "vscode": {}
+	}
 ```
 
 ### Step 05-1: Extensions
@@ -98,6 +98,9 @@ You can then add it to the devcontainer.json like that:
 ```json
 	"customizations": {
 		"vscode": {
+            "extensions": [
+				...
+			],
 			"settings": {
 				"terminal.integrated.defaultProfile.linux": "fish"
 			}
@@ -106,13 +109,21 @@ You can then add it to the devcontainer.json like that:
 ```
 
 # Part 2: Dockerfile
-Step 01: Base Image
-We'll go with debian
+## Step 00: Dockerfile
+Create a file called **Dockerfile** in the same folder as your **devcontainer.json** file.
 
+## Step 01: The Base Image
+Using the FROM statement, you can specify a base image for Docker to use, for this workshop we'll go with Debian.
+
+```Dockerfile
 FROM debian:latest
+```
 
-Step 02: non root user
+## Step 02: Adding a non root user
 
+To make it easier to manage, we will add a user inside our container.
+
+```Dockerfile
 ARG USERNAME=user-name-goes-here
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -121,25 +132,43 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
 
 USER $USERNAME
+```
 
-Step 03: add root privilege
+## Step 03: add root privilege
+Sometimes, you need to have root privileges
 
+```Dockerfile
+ARG USERNAME=user-name-goes-here
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
     && apt-get update \
     && apt-get install -y sudo \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
+
 USER $USERNAME
+```
 
-Step 04: Add the package you need
-apt-get update && apt-get install -y your parckage list
+## Step 04: Add the package you need
+You don't want to have to manually reinstall your packages everytime you rebuild the container.
 
-Step 05: Update devcontainer.json
-Add a name and the build context
-    "name": "Debian",
+To prevent that from happening you can add a RUN Instruction to your Dockerfile with the following :
+```Dockerfile
+RUN sudo apt-get update && apt-get install -y your package list
+```
+
+## Step 05: Update devcontainer.json
+Lastly, you need to tell your dev container to use the image from your Dockerfile, go to to your devcontainer.json file and replace the image instruction with the following:
+
+```json
     "build": {
-        "dockerfile": "dockerfile",
+        "dockerfile": "Dockerfile",
         "context": ".."
     },
+```
 
 # Resources
 https://containers.dev/
