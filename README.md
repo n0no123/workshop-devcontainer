@@ -1,6 +1,8 @@
 # workshop-devcontainer
 
-# Part 0: Setup & Exemple
+# Part 0: Setup & 
+## Step 0: Star this repository
+
 ## Step 1: Installation
 ### Docker
 Go to [Docker's website](https://docs.docker.com/engine/install/#server) and follow the instruction specific to your platform.
